@@ -1,3 +1,5 @@
+/*
+
 MIT License
 
 Copyright (c) 2017 Nicolas Dammin, UltraFX
@@ -19,3 +21,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+ */
+
+#ifndef DRV_LED_REV4_H
+#define DRV_LED_REV4_H
+
+#include "bgm11x/bgm11x.h"
+
+typedef struct 
+{
+  uint8_t red;
+  uint8_t green;
+  uint8_t blue;
+} WS2812_RGB_t;
+
+void led_rev4_init(bt_device_t *sDev);
+int16_t led_rev4_set_color(bt_device_t *sDev, uint8_t byChannel, WS2812_RGB_t sColor);
+void led_rev4_handle_notification(uint8_t byDeviceID, uint8_t *pbyData, uint16_t byLength);
+
+#endif

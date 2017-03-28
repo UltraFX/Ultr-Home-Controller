@@ -1,3 +1,6 @@
+/*
+ * hmi_task.h
+
 MIT License
 
 Copyright (c) 2017 Nicolas Dammin, UltraFX
@@ -19,3 +22,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+ */
+
+#ifndef APP_HMI_TASK_H_
+#define APP_HMI_TASK_H_
+
+#include "main.h"
+
+#define NUM_BUFFERS     5
+
+extern THD_WORKING_AREA(hmiThread, 512);
+
+THD_FUNCTION(HMIThread, arg);
+
+extern mailbox_t mb_dispData;
+
+#endif /* APP_HMI_TASK_H_ */

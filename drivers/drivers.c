@@ -1,3 +1,6 @@
+/*
+ * drivers.c
+
 MIT License
 
 Copyright (c) 2017 Nicolas Dammin, UltraFX
@@ -19,3 +22,29 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+ */
+
+#include <stdint.h>
+#include "bgm11x/bgm11x.h"
+#include "drivers/drivers.h"
+
+uint8_t drv_init(bt_device_t *sDev)
+{
+  switch(sDev->byType)
+  {
+  case DRV_EQ3:
+      eq3_init(sDev);
+      break;
+  case DRV_LED_REV4:
+      led_rev4_init(sDev);
+      break;
+  case DRV_UNKNOWN:
+      break;
+  default:
+      return BT_ERROR;
+      break;
+  }
+
+  return BT_OK;
+}

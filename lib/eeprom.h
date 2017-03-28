@@ -1,3 +1,6 @@
+/*
+ * eeprom.h
+
 MIT License
 
 Copyright (c) 2017 Nicolas Dammin, UltraFX
@@ -19,3 +22,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+ */
+
+#ifndef LIB_EEPROM_H_
+#define LIB_EEPROM_H_
+
+uint8_t eep_read_byte(uint16_t wAddress, uint8_t *pbyBuf);
+uint8_t eep_read_array(uint16_t wAddress, uint8_t *pBuf, uint16_t wLength);
+uint8_t eep_read_dword(uint16_t wAddress, uint32_t *pdwBuf);
+
+#endif /* LIB_EEPROM_H_ */

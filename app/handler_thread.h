@@ -1,3 +1,6 @@
+/*
+ * handler_thread.h
+
 MIT License
 
 Copyright (c) 2017 Nicolas Dammin, UltraFX
@@ -19,3 +22,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+ */
+
+#ifndef APP_HANDLER_THREAD_H_
+#define APP_HANDLER_THREAD_H_
+
+#include "ch.h"
+
+extern THD_WORKING_AREA(hThread, 128);
+THD_FUNCTION(handlerThread, arg);
+
+//extern thread_t *btThreadP;
+
+#endif /* APP_HANDLER_THREAD_H_ */

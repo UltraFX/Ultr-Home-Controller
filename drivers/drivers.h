@@ -1,3 +1,6 @@
+/*
+ * drivers.h
+
 MIT License
 
 Copyright (c) 2017 Nicolas Dammin, UltraFX
@@ -19,3 +22,20 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+ */
+
+#ifndef DRIVERS_DRIVERS_H_
+#define DRIVERS_DRIVERS_H_
+
+#include "drivers/drv_eq3.h"
+#include "drivers/drv_led_rev4.h"
+
+#define DRV_UNKNOWN     0
+#define DRV_EQ3         1
+#define DRV_LED_REV4    2
+#define DRV_AVEA        3
+
+uint8_t drv_init(bt_device_t *sDev);
+
+#endif /* DRIVERS_DRIVERS_H_ */
