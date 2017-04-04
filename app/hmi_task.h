@@ -33,8 +33,10 @@ SOFTWARE.
 #define NUM_BUFFERS     5
 
 extern THD_WORKING_AREA(hmiThread, 512);
+extern THD_WORKING_AREA(debugArea, 512);
 
 THD_FUNCTION(HMIThread, arg);
+THD_FUNCTION(DebugThread, arg);
 
 extern mailbox_t mb_dispData;
 

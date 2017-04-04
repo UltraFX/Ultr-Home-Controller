@@ -80,8 +80,7 @@ typedef struct DeviceT
     uint32_t                    dwKey;
     uint8_t                     byType;
     struct gecko_cmd_packet     *packet;
-    void                        (*pDataHandler)(struct DeviceT *sDev,
-                                uint32_t *data);
+    void                        (*pDataHandler)(struct DeviceT *sDev);
     void                        (*pgetService)(struct DeviceT *sDev,
                                 uint32_t dwService);
     void                        (*pgetCharacteristic)(struct DeviceT *sDev,

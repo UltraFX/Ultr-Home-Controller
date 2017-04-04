@@ -52,16 +52,37 @@ static uint32_t dwServiceHandle = 0;
 static uint16_t wTempWriteHandle = 0;
 static uint16_t wNotifHandle = 0;
 
-static eq3_data_t eq3Data;
-
 static uint8_t dispData[10];
 
 /********************* LOCAL FUNCTION PROTOTYPES ******************************/
+
+/**
+ * @brief get service handle from UUID
+ *
+ * @param[in]   sDev        device struct
+ * @param[in]   dwServiceID service ID
+ */
 void eq3_get_service_handle(bt_device_t *sDev, uint32_t dwServiceID);
+
+/**
+ * @brief get characteristic handle from UUID
+ *
+ * @param[in]   sDev                device struct
+ * @param[in]   wCharacteristicID   characteristic ID
+ */
 void eq3_get_characteristic_handle(bt_device_t *sDev,
                                    uint16_t wCharacteristicID);
-void eq3_handle_transfer(bt_device_t *sDev, uint32_t *pData);
 
+/**
+ * @brief gatt characteristic event handler
+ *
+ * @param[in]   sDev    device struct
+ */
+void eq3_handle_transfer(bt_device_t *sDev);
+
+/**
+ * @brief
+ */
 void eq3_Disp(bt_device_t *sDev, uint8_t function, uint32_t dwData);
 
 /********************* FUNCTION DEFINITIONS ***********************************/
@@ -101,7 +122,6 @@ int16_t eq3_disconnect(bt_device_t *sDev)
 {
     evCount = 0;
     sDev->byCharPos = 0;
-    sDev->byConnState = BUSY;
     sDev->iErr = bt_disconnect(sDev);
 
     return sDev->iErr;
@@ -114,6 +134,14 @@ int16_t eq3_set_temperature(bt_device_t *sDev, float temperature)
     byaWrtCmd[0] = 0x41;
     byaWrtCmd[1] = (uint8_t)(temperature * 2);
     sDev->iErr = bt_write_data(sDev, wTempWriteHandle, byaWrtCmd, 2);
+
+    return sDev->iErr;
+}
+
+int16_t eq3_get_temperature(bt_device_t *sDev)
+{
+    uint8_t test[] = {03};
+    sDev->iErr = bt_write_data(sDevice, wTempWriteHandle, test, 1);
 
     return sDev->iErr;
 }
@@ -147,7 +175,7 @@ void eq3_get_characteristic_handle(bt_device_t *sDev,
   }
 }
 
-void eq3_handle_transfer(bt_device_t *sDev, uint32_t *pData)
+void eq3_handle_transfer(bt_device_t *sDev)
 {
   float fTemp = 0.0;
   uint8_t byLength;
@@ -156,7 +184,7 @@ void eq3_handle_transfer(bt_device_t *sDev, uint32_t *pData)
   case gatt_handle_value_notification:
       byLength = sDev->packet->data.evt_gatt_characteristic_value.value.len;
       fTemp = (float)sDev->packet->data.evt_gatt_characteristic_value.value.data[byLength-1]/2.0;
-      chprintf((BaseChannel *)&SD2, "Temperature: (%d) %f°C\n", byLength, fTemp);
+//      chprintf((BaseChannel *)&SD2, "Temperature: (%d) %f°C\n", byLength, fTemp);
       eq3_Disp(sDevice, 5, (uint32_t)(fTemp*10));
     break;
   default:
@@ -244,7 +272,6 @@ void eq3_handler(bt_device_t *sDevice)
             else
             {
                 //eq3_Disp(sDevice, 3, 0);
-                chprintf((BaseChannel *)&SD2, "Complete\n");
                 //bt_read_data(sDevice, wNotifHandle);
 //                eq3_set_temperature(sDevice, 23.0);
                 uint8_t test[] = {03};
@@ -262,7 +289,6 @@ void eq3_handler(bt_device_t *sDevice)
             break;
       }
     case BT_BOND_FAILED:
-      chprintf((BaseChannel *)&SD2, "Bonding failed\n");
       sDevice->byState = BT_STATE_IDLE;
       break;
     case BT_STATE_ERROR:

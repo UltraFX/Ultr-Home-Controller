@@ -42,13 +42,22 @@ int16_t eq3_connect(bt_device_t *sDev);
 int16_t eq3_disconnect(bt_device_t *sDev);
 
 /**
-  * brief set new temperature on eq-3 device
+  * @brief set new temperature on eq-3 device
   *
   * @param[in]  pointer to bluetooth device instance
   * @param[in]  temperature in 0.5 °C steps
   * @return     0 or error code
   */
 int16_t eq3_set_temperature(bt_device_t *sDev, float temperature);
+
+/**
+ *
+ * @brief get current temperature value from eq-3 device
+ *
+ * @param[in] pointer to bluetooth device instance
+ * @return    0 or error code
+ */
+int16_t eq3_get_temperature(bt_device_t *sDev);
 
 /**
   * @brief set automatic or manual mode on eq-3 device

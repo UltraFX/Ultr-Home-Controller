@@ -52,12 +52,29 @@ THD_FUNCTION(handlerThread, arg) {
   btThreadRsp = chThdGetSelfX();
 
   uint8_t byaBT_WoZa[] = {0x27, 0x87, 0x07, 0x22, 0x1a, 0x00};
-  uint8_t pData[] = "Boot OK!\n";
+  uint8_t byaBT_Bad[] = {0x97, 0xfd, 0x06, 0x22, 0x1a, 0x00};
+  uint8_t byaBT_PC[] = {0xa1, 0x89, 0x07, 0x22, 0x1a, 0x00};
+  uint8_t byaBT_Kueche[] = {0x61, 0x87, 0x07, 0x22, 0x1a, 0x00};
 
   sDevice[0].byType = DRV_EQ3;
   memcpy(sDevice[0].byaBT_Address, byaBT_WoZa, 6);
   sDevice[0].byID = 1;
   sDevice[0].dwKey = 0;//4332;
+
+  sDevice[1].byType = DRV_EQ3;
+  memcpy(sDevice[1].byaBT_Address, byaBT_PC, 6);
+  sDevice[1].byID = 2;
+  sDevice[1].dwKey = 0;//4332;
+
+  sDevice[2].byType = DRV_EQ3;
+  memcpy(sDevice[2].byaBT_Address, byaBT_Bad, 6);
+  sDevice[2].byID = 3;
+  sDevice[2].dwKey = 0;//4332;
+
+  sDevice[3].byType = DRV_EQ3;
+  memcpy(sDevice[3].byaBT_Address, byaBT_Kueche, 6);
+  sDevice[3].byID = 4;
+  sDevice[3].dwKey = 0;//4332;
 
   for(i = 0; i < NUM_DEVICES; i++)
   {
@@ -67,19 +84,25 @@ THD_FUNCTION(handlerThread, arg) {
       }
   }
 
+  char cBoot[] = "BOOT OK\n";
+
   while(true)
   {
       if(g_bootOK == 1)
       {
         //bt_list_bonds();
-        eq3_connect(&sDevice[0]);
-        g_bootOK = 0;
+        //eq3_connect(&sDevice[0]);
+          uartStartSend(&UARTD2, sizeof(cBoot), cBoot);
+          g_bootOK = 0;
       }
 
-      if(sDevice[byCurrentDevice].byType != 0)
-      {
-          sDevice[byCurrentDevice].pHandler(&sDevice[byCurrentDevice]);
-      }
+    for(byCurrentDevice = 0; byCurrentDevice < NUM_DEVICES; byCurrentDevice++)
+    {
+        if(sDevice[byCurrentDevice].byType != 0)
+        {
+            sDevice[byCurrentDevice].pHandler(&sDevice[byCurrentDevice]);
+        }
+    }
 
       chThdSleepMilliseconds(10);
   }

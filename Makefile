@@ -131,6 +131,7 @@ CSRC = $(STARTUPSRC) \
        drivers/drv_eq3.c \
        drivers/drv_led_rev4.c \
        lib/eeprom.c \
+       lib/xprintf.c \
        $(CHIBIOS)/os/hal/lib/streams/memstreams.c \
        $(CHIBIOS)/os/hal/lib/streams/chprintf.c \
        main.c

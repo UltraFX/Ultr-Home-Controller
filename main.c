@@ -52,7 +52,7 @@ int main(void) {
   /*
    * Activates the serial driver 2 using the driver default configuration.
    */
-  sdStart(&SD2, NULL);
+//  sdStart(&SD2, NULL);
 
   /*
    * Creates the blinker thread.
@@ -60,16 +60,17 @@ int main(void) {
   chThdCreateStatic(waBTThread, sizeof(waBTThread), NORMALPRIO, BTThread, NULL);
   chThdCreateStatic(hThread, sizeof(hThread), NORMALPRIO, handlerThread, NULL);
   chThdCreateStatic(hmiThread, sizeof(hmiThread), LOWPRIO, HMIThread, NULL);
+  chThdCreateStatic(debugArea, sizeof(debugArea), LOWPRIO, DebugThread, NULL);
 
-  chprintf((BaseChannel *)&SD2, "test....\n");
+//  chprintf((BaseChannel *)&SD2, "test....\n");
   /*
    * Normal main() thread activity, in this demo it does nothing except
    * sleeping in a loop and check the button state.
    */
 
   while (true) {
-    if (!palReadPad(GPIOC, GPIOC_BUTTON))
-      TestThread(&SD2);
+    if (!palReadPad(GPIOC, GPIOC_BUTTON));
+//      TestThread(&SD2);
     chThdSleepMilliseconds(500);
   }
 }

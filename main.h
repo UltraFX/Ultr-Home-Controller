@@ -28,6 +28,8 @@ SOFTWARE.
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#include <stdio.h>
+#include <string.h>
 #include "ch.h"
 #include "hal.h"
 #include "gfx.h"

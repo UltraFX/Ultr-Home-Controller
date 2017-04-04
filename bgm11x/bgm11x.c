@@ -148,8 +148,7 @@ void bt_handler(struct gecko_cmd_packet *packet) {
             if(sDevice[byI].byConnHandle == packet->data.evt_gatt_characteristic_value.connection)
             {
                 sDevice[byI].packet = packet;
-                sDevice[byI].pDataHandler(&sDevice[byI],
-                       (uint32_t*)&packet->data.evt_gatt_characteristic_value);
+                sDevice[byI].pDataHandler(&sDevice[byI]);
                 sDevice[byI].byState = BT_STATE_TRANSACTION;
                 break;
             }

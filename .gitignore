@@ -1,0 +1,10 @@
+*.d
+*.o
+*.lst
+build/ch.bin
+build/ch.dmp
+build/ch.elf
+build/ch.hex
+build/ch.list
+build/ch.map
+libbgapi.a
